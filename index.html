@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>관심종목 10일 신호</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="10일 신호">
+<meta name="theme-color" content="#0b0f14">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEbklEQVR4nO3dPW5bMRBFYTpIpyJN+jSpjCzPy/DyAldpsgj3KQSwcHyl58ch5w59vj6K8HhAjp/+Hi7fvjfgPV+ynwB8EQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHOW9vjxPeuSvkx4Xs81roiOOYhY00T3wVZP+DgZxeXyK/X+Jw9eJTSK2D+KwM3hwBPZBHC4Ch4moPhhIM62cLk8gjgTmTXTcBEsQ/mfFJMSRo0QfxJFmUh+BD0scmcL74D7HhkJG1PDU2DkseI4gxOFisI8ZeRGHkdMLPGnjIQ4vJ5Z53pFEHHZ85g/iqG1qScRh5/iftbP3GOKoasHpQxxerF6wJQ4jPgfKFXG4cCujEQduIA4LWR8+uI048n1oCF3ZB3EkMxw1OuKoIeWeOnFk8hw1OuJIY3W/613EkcN51OiII0GJMhpxOEt/YwdxrOY/anTEsVSVA+Wq5Aep31xih+t4RK0yWsWd4/9L/PryXGivvsukjFYujhsRmPdhfr/rXZXiuHt9bfuwfWK3VYrjCMNlKDdqdGXiOH6JDfs4wq2MViWOj663Tx8VR42uQBznVtqhD4fnMKJAHKflrk3dUaNzj2NwgbP62KCMZh5HyNI67+3OZTTzOKIs7sM5xw/xjSP2Ei9bsD0OlCvTOGas5YI+diqjecYxbxVNNvwSZTTPOA66PD6duMrp5VUpoxnG8dFLbNKHyZ4UyyuOc5c4vY/NRo3OKI6RS5zexxG1ymhWX289fmYv/lE02w9AR3HZOUKmuWX7x2ZvTFQsdo7YM3ve/nE6iIrbRqsVx/FLHNuHz881LpYfx6TbA+N9eP7MxUrJM8e8G0cj88cnGSnuytw5FtweyF3j0ttGS985jhi5xInLU72MlhjHslciUhZpgzJaVhyLd/vFS7VHGc38g9SBV/ny+DS7yG2a6BIG0sSXtmf0sV8T3eo40t/0ENjHxllcLT1WHG4ejJ8v2zfROc4cs6/+uT4+TxPdumMl/UB5w+35GFr0p6zDgfLG3VU/9x7VnXgdKyk3JIp+w9gCK44VNvCiph8rlFHX3DgMRw0cZ/GqLNuGp4lxcKBUNysODpQNTIlj10+AfTaZMwdlmIuPg1FjG8FxMGrsJOdYYdsoITIODpTNhMVBGfuJiYNRY0tLZw62jVoC4uBA2dVoHBwoG1t0rLBtVLQiDsooanoclFGXxZt94Gk0jvCv94OPgJ1DFUAZ1cUcKyFfKQw3+d8mCFsMpJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSAHfJvjj56/xB8EMf//8Hvnn7ByQiAMScUDizT6Q2DkgEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJD+AasCcYSQiST0AAAAAElFTkSuQmCC">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEbklEQVR4nO3dPW5bMRBFYTpIpyJN+jSpjCzPy/DyAldpsgj3KQSwcHyl58ch5w59vj6K8HhAjp/+Hi7fvjfgPV+ynwB8EQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHOW9vjxPeuSvkx4Xs81roiOOYhY00T3wVZP+DgZxeXyK/X+Jw9eJTSK2D+KwM3hwBPZBHC4Ch4moPhhIM62cLk8gjgTmTXTcBEsQ/mfFJMSRo0QfxJFmUh+BD0scmcL74D7HhkJG1PDU2DkseI4gxOFisI8ZeRGHkdMLPGnjIQ4vJ5Z53pFEHHZ85g/iqG1qScRh5/iftbP3GOKoasHpQxxerF6wJQ4jPgfKFXG4cCujEQduIA4LWR8+uI048n1oCF3ZB3EkMxw1OuKoIeWeOnFk8hw1OuJIY3W/613EkcN51OiII0GJMhpxOEt/YwdxrOY/anTEsVSVA+Wq5Aep31xih+t4RK0yWsWd4/9L/PryXGivvsukjFYujhsRmPdhfr/rXZXiuHt9bfuwfWK3VYrjCMNlKDdqdGXiOH6JDfs4wq2MViWOj663Tx8VR42uQBznVtqhD4fnMKJAHKflrk3dUaNzj2NwgbP62KCMZh5HyNI67+3OZTTzOKIs7sM5xw/xjSP2Ei9bsD0OlCvTOGas5YI+diqjecYxbxVNNvwSZTTPOA66PD6duMrp5VUpoxnG8dFLbNKHyZ4UyyuOc5c4vY/NRo3OKI6RS5zexxG1ymhWX289fmYv/lE02w9AR3HZOUKmuWX7x2ZvTFQsdo7YM3ve/nE6iIrbRqsVx/FLHNuHz881LpYfx6TbA+N9eP7MxUrJM8e8G0cj88cnGSnuytw5FtweyF3j0ttGS985jhi5xInLU72MlhjHslciUhZpgzJaVhyLd/vFS7VHGc38g9SBV/ny+DS7yG2a6BIG0sSXtmf0sV8T3eo40t/0ENjHxllcLT1WHG4ejJ8v2zfROc4cs6/+uT4+TxPdumMl/UB5w+35GFr0p6zDgfLG3VU/9x7VnXgdKyk3JIp+w9gCK44VNvCiph8rlFHX3DgMRw0cZ/GqLNuGp4lxcKBUNysODpQNTIlj10+AfTaZMwdlmIuPg1FjG8FxMGrsJOdYYdsoITIODpTNhMVBGfuJiYNRY0tLZw62jVoC4uBA2dVoHBwoG1t0rLBtVLQiDsooanoclFGXxZt94Gk0jvCv94OPgJ1DFUAZ1cUcKyFfKQw3+d8mCFsMpJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSAHfJvjj56/xB8EMf//8Hvnn7ByQiAMScUDizT6Q2DkgEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJD+AasCcYSQiST0AAAAAElFTkSuQmCC">
+<style>
+  :root {
+    --bg: #0b0f14; --card: #121820; --border: #2a3340;
+    --accent: #00e5a0; --danger: #ff5252; --warn: #ffb74d;
+    --text: #e6edf3; --text2: #d0d9de; --text3: #8b98a5;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+  .wrap { max-width: 520px; margin: 0 auto; padding: 14px 12px 40px; }
+  h1 { font-size: 16px; margin: 4px 0 12px; }
+  h1 small { font-size: 11px; color: var(--text3); font-weight: 400; margin-left: 6px; }
+  .box { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+  label { display: block; font-size: 11px; color: var(--text3); margin: 8px 0 3px; }
+  input, textarea { width: 100%; background: #0b0f14; border: 1px solid var(--border); color: #fff;
+    border-radius: 6px; padding: 8px; font-size: 14px; font-family: inherit; }
+  textarea { min-height: 64px; resize: vertical; }
+  .row { display: flex; gap: 8px; }
+  .row > div { flex: 1; }
+  button { cursor: pointer; border-radius: 6px; font-size: 13px; padding: 8px 14px; border: 1px solid var(--border);
+    background: transparent; color: var(--text2); font-family: inherit; }
+  button.main { background: var(--accent); color: #000; border: none; font-weight: 700; margin-top: 10px; width: 100%; }
+  .hint { font-size: 10px; color: var(--text3); margin-top: 4px; line-height: 1.5; }
+  .head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .name { font-size: 15px; font-weight: 700; min-width: 0; }
+  .rank { display: inline-block; min-width: 20px; margin-right: 6px; font-size: 11px; font-weight: 700; color: var(--accent); }
+  .price { font-size: 13px; color: var(--text2); white-space: nowrap; flex-shrink: 0; }
+  .badge { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 5px; margin: 6px 6px 0 0; }
+  .buy { background: rgba(0,229,160,0.14); color: var(--accent); }
+  .sell { background: rgba(255,82,82,0.14); color: var(--danger); }
+  .wait { background: rgba(255,183,77,0.14); color: var(--warn); }
+  .none { background: rgba(139,152,165,0.14); color: var(--text3); }
+  .stat { font-size: 11px; color: var(--text2); margin-top: 6px; line-height: 1.6; }
+  .stat b { color: #fff; }
+  .bars { display: flex; margin-top: 8px; overflow-x: auto; }
+  .col { display: flex; flex-direction: column; align-items: center; width: 32px; flex: none; }
+  .col.split { border-left: 1px dashed #667; }
+  .up, .dn { height: 16px; display: flex; }
+  .up { align-items: flex-end; } .dn { align-items: flex-start; }
+  .bar { width: 10px; }
+  .val { font-size: 9px; }
+  .pos { color: var(--accent); } .neg { color: var(--danger); }
+  .trow { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+  .trow span { font-size: 11px; color: var(--text3); white-space: nowrap; }
+  .trow input { flex: 1; min-width: 0; }
+  .trow button { padding: 8px 12px; }
+  .trow.set input { border-color: rgba(0,229,160,0.5); }
+  .chip { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 4px; white-space: nowrap; }
+  .sig { border-top: 1px solid var(--border); margin-top: 10px; padding-top: 8px; }
+  .sig .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; }
+  .sig .stat b.pos { color: var(--accent); } .sig .stat b.neg { color: var(--danger); }
+  .grp { margin-top: 10px; }
+  .grp .gh { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text3); }
+  .grp .gh .badge { margin: 0; font-size: 11px; padding: 2px 7px; }
+
+  .gchips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .gchip { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; padding: 5px 9px; border-radius: 7px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text); cursor: default; }
+  .gname { cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px; padding: 4px 0; }
+  .gchip i { font-style: normal; font-size: 10px; font-weight: 700; color: var(--accent); }
+  .gchip em { font-style: normal; font-size: 11px; color: var(--text3); }
+  .gchip .garr { margin-left: 2px; padding: 0 5px 0 7px; border-left: 1px solid var(--border); color: var(--accent); font-size: 13px; }
+  .sec { background: var(--card); border: 1px solid var(--border); border-radius: 10px; margin: 0 0 12px; }
+  .sec > summary { list-style: none; display: flex; align-items: center; gap: 8px; padding: 13px 12px; font-size: 13px; font-weight: 700; color: var(--text); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .sec > summary::-webkit-details-marker { display: none; }
+  .sec > summary span:first-child { flex: 1; }
+  .sec > summary .sc { flex: none; font-size: 11px; font-weight: 400; color: var(--text3); }
+  .sec > summary::after { content: '▾'; color: var(--text3); font-size: 12px; }
+  .sec[open] > summary::after { content: '▴'; }
+  .sec[open] > summary { border-bottom: 1px solid var(--border); }
+  .sec > .sb { padding: 10px 12px 12px; }
+  .sec .sb .box { background: rgba(255,255,255,0.02); }
+  #groups .grp:first-child { margin-top: 0; }
+  details.plan { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border); }
+  details.plan > summary { font-size: 12px; color: var(--text); cursor: pointer; }
+  details.plan > summary span { margin-left: 8px; font-size: 10px; color: var(--text3); }
+  details { margin-top: 8px; }
+  summary { font-size: 11px; color: var(--text3); cursor: pointer; }
+  .actions { display: flex; gap: 8px; margin-top: 8px; }
+  .actions button { flex: 1; padding: 6px; font-size: 12px; }
+  .rules { font-size: 11px; color: var(--text2); line-height: 1.7; }
+  .rules b.g { color: var(--accent); } .rules b.r { color: var(--danger); } .rules b.y { color: var(--warn); }
+  .tools { display: flex; gap: 6px; margin-bottom: 12px; }
+  .tools button { flex: 1; padding: 8px 4px; font-size: 12px; }
+  .xbtn { padding: 2px 8px; font-size: 11px; color: var(--danger); border-color: rgba(255,82,82,0.4); }
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .modal { background: #111418; border: 1px solid var(--border); border-radius: 10px; padding: 16px; width: 100%; max-width: 460px; display: flex; flex-direction: column; gap: 10px; }
+  .modal .mt { font-size: 13px; font-weight: 700; color: var(--accent); }
+  .modal .mh { font-size: 11px; color: var(--text2); line-height: 1.6; white-space: pre-line; }
+  .modal textarea { height: 150px; font-size: 11px; font-family: ui-monospace, Menlo, monospace; }
+  .modal .mb { display: flex; gap: 8px; }
+  .modal .mb button { flex: 1; padding: 10px; }
+  .empty { text-align: center; color: var(--text3); font-size: 12px; padding: 18px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>관심종목 10일 신호<small>종가 기준 · 오후 5시 확정</small></h1>
+  <div id="sessionBar" class="stat" style="margin:0 0 10px;color:var(--text2)"></div>
+
+  <div class="tools">
+    <button onclick="exportData()">⬇ 내보내기</button>
+    <button onclick="showImport()">⬆ 가져오기</button>
+    <button onclick="clearAll()" style="color:var(--danger)">🗑 전체 삭제</button>
+  </div>
+
+  <details class="sec" data-k="add" ontoggle="setUi(this)"><summary><span>추가 등록</span></summary><div class="sb">
+    <div class="row">
+      <div><label>종목명</label><input id="fName" placeholder="예: RFHIC"></div>
+      <div><label>ATR (가격 단위, 소수점 가능)</label><input id="fAtr" type="number" step="any" inputmode="decimal" placeholder="예: 5850 / 3.42"></div>
+    </div>
+    <label>종가 (전일 → 오래된 날 순서, 쉼표 또는 줄바꿈으로 구분)</label>
+    <textarea id="fCloses" placeholder="11개 권장. 첫 번째 값이 가장 최근 확정 종가(전일)&#10;당일 종가는 등록 후 카드에서 입력&#10;예: 62285, 61115, 62285, 62870, 64040, 65795, 62870, 60530, 56435, 53510, 50000"></textarea>
+    <div class="hint">19,620처럼 천 단위 콤마가 있어도 괜찮아요. 종가 11개를 넣으면 최근 10일 변동까지 모두 계산돼요. 6개부터 가격 신호만, 11개가 되면 눌림목 신호까지 나와요.</div>
+    <button class="main" onclick="addItem()">추가</button>
+  </div></details>
+
+  <details class="sec" data-k="perf" ontoggle="setUi(this)"><summary><span>신호 성과 추적</span><span class="sc" id="sc-perf"></span></summary><div class="sb" id="perf"></div></details>
+
+  <details class="sec" data-k="groups" ontoggle="setUi(this)"><summary><span>신호별 종목 분류</span><span class="sc" id="sc-groups"></span></summary><div class="sb" id="groups"></div></details>
+
+  <details class="sec" data-k="list" ontoggle="setUi(this)"><summary><span>관심종목 · 매수 우선순위</span><span class="sc" id="sc-list"></span></summary><div class="sb" id="list"></div></details>
+
+  <details class="sec" data-k="buyhow" ontoggle="setUi(this)"><summary><span>매수 방법 (매수 조건 설명)</span></summary><div class="sb">
+    <div class="rules">
+      <div><b class="y">진입 시점</b>: 신호는 종가 기준이라 확정은 장 마감 후예요. 장중에 당일 종가를 임시로 넣어 뜬 신호는 잠정이에요. 확정 신호 다음 날 진입할지, 마감 동시호가에 진입할지 하나로 정해 두세요. 성과 추적은 신호일 종가 진입을 가정해요.</div>
+      <div style="margin-top:4px"><b class="g">눌림목 신호 · 눌림 반등</b>: 조정 뒤 반등을 확인한 자리예요. 1차 50%는 현재가, 2차 50%는 1차보다 −1.0ATR 아래로 눌릴 때 넣어요. 눌리지 않고 오르면 2차는 체결되지 않아 1차만 보유하게 돼요.</div>
+      <div style="margin-top:4px"><b class="g">10일 고점 돌파</b>: 이미 오른 뒤라 추격에 주의해요. 1차 50%는 돌파 확인 가격, 2차 50%는 직전 10일 고점(돌파 지점)까지 되돌려 지지될 때 넣어요.</div>
+      <div style="margin-top:4px"><b class="y">눌림 후보 · 신호 없음</b>: 매수 시점이 아니에요. 눌림 후보는 당일 반등(0 이상)을 기다려요. 카드의 계획은 현재가 기준 참고용으로만 보여줘요.</div>
+      <div style="margin-top:4px"><b class="r">손절</b>: 기준은 1·2차 평균단가예요(1차만 체결이면 1차가). 1차 손절은 −1.5ATR에서 50% 매도, 2차 손절은 −2.5ATR에서 전량 매도예요. 신호 성과 추적도 같은 단계(−1.5ATR 절반, −2.5ATR 전량)로 추적하지만 기준은 평균단가가 아니라 신호일 종가예요.</div>
+      <div style="color:var(--text3);margin-top:4px">함께 확인: 최대 5~6종목, 현금 30~40% 유지, 불타기는 수익 구간에서 조건을 충족할 때만, 20일선 같은 가격 조건은 앱 밖에서 확인하세요. 호가 단위·체결 오차는 계산에 넣지 않았고, 카드의 매수 계획은 풀다운으로 열어 보는 참고용 계산이에요.</div>
+    </div>
+  </div></details>
+
+  <details class="sec" data-k="rules" ontoggle="setUi(this)"><summary><span>신호 기준 (예시)</span></summary><div class="sb">
+    <div class="rules">
+      <div><b class="g">매수 · 10일 고점 돌파</b>: 현재가 > 직전 10일 최고 종가</div>
+      <div><b class="g">매수 · 눌림 반등</b>: 10일 고점 대비 -0.5 ~ -2.0 ATR 조정 후 전일보다 상승</div>
+      <div><b class="g">매수 · 눌림목 신호</b>: 10일 합 +1 이상, 5일 합 -1 ~ 0, 5일/10일 절대평균 1.0 이하, 당일 0 이상 (3개만 맞으면 눌림 후보)</div>
+      <div><b class="r">매도 · 10일 저점 이탈</b>: 현재가 < 직전 10일 최저 종가</div>
+      <div><b class="r">매도 · 평균 아래</b>: 10일 평균 아래 + 고점 대비 -1.5 ATR 초과</div>
+      <div style="margin-top:4px"><b class="g">매수 우선순위</b>: 눌림 반등 → 눌림목 신호 → 10일 고점 돌파 → 눌림 후보 → 신호 없음 → 매도 신호 → 데이터 부족 (매수 신호가 겹치면 가산)</div>
+      <div style="color:var(--text3);margin-top:4px">신호별 종목 분류는 종목마다 가장 우선순위가 높은 신호 하나로 묶어요. 칩 앞 숫자는 아래 목록의 순위, 이름 옆 +1은 겹친 매수 신호 수예요.</div>
+      <div style="margin-top:4px"><b class="y">신호 성과 추적</b>: 당일 종가를 입력해 두면 한국시간 오후 5시 이후 확정 종가 기준으로 그날의 매수 신호(눌림목·눌림 반등·고점 돌파)가 자동 기록돼요. 신호일 종가에 한 번에 진입했다고 가정하고, 이후 확정 종가마다 손익을 쌓아요. −1.5ATR 이탈 시 절반 손절, −2.5ATR 이탈 시 전량 손절, 또는 10일 경과 시 종료해요.</div>
+      <div style="color:var(--text3);margin-top:4px">당일 종가는 카드에서 입력하며(장 마감 15:30 후 ~ 오후 5시 사이), 한국시간 오후 5시가 지나면 자동으로 전일 종가가 돼요. 오후 5시 이후에 입력한 값은 다음 세션 칸으로 들어가요. 합 = 일별 변동(= (오늘 종가 − 전일 종가) ÷ ATR)의 합, 절대평균 = 그 크기의 평균. 고가·저가가 아닌 종가만 봐요. 가격 조건(20일선 등)과 함께 확인하세요.</div>
+    </div>
+  </div></details>
+</div>
+
+<script>
+var KEY = 'watch_signal_v1';
+var items = [];
+var STOP1 = 1.5, STOP2 = 2.5, HOLD = 10, MINN = 10;
+var SIG_PRI = { rb: 100, pb: 80, bo: 70 };   // 신호 우선순위 (눌림 반등 > 눌림목 > 고점 돌파)   // MINN: 종료 건수가 이보다 적으면 표본 부족 표시. HOLD(추적 일수)는 필요하면 늘려도 됨
+//   // 1차(절반)·2차(전량) 손절선(ATR 배수), 추적 기간(확정 종가 일수)
+var SIGNAME = { pb: '눌림목 신호', rb: '눌림 반등', bo: '10일 고점 돌파' };
+
+function load() {
+  try { items = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { items = []; }
+  if (!Array.isArray(items)) items = [];
+  // 예전 형식(오래된→최근) 데이터는 최근→오래된 순으로 자동 변환
+  var changed = false;
+  items.forEach(function(it) {
+    if (it.ord !== 'd') { it.closes = revStr(it.closes); it.ord = 'd'; changed = true; }
+    if ('risk' in it) { delete it.risk; changed = true; }
+    (it.sigs || []).forEach(function(sg) {   // 예전 기록(−1.5ATR 전량 종료)은 1차 손절로 보고 새 규칙으로 계속 추적
+      if (sg.st === 'stop' && sg.s1 === undefined && sg.path && sg.path.length) {
+        sg.s1 = sg.path[sg.path.length - 1]; sg.k = sg.path.length - 1;
+        if (sg.s1 > sg.e - STOP2 * sg.a) sg.st = 'open';
+        changed = true;
+      }
+    });
+  });
+  if (changed) save();
+  rollover();
+}
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) { /* 저장 불가 환경에서는 무시 */ }
+}
+function esc(t) {
+  return String(t).replace(/[&<>"']/g, function(c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+function parseCloses(txt) {
+  // 19,620 같은 천 단위 콤마는 숫자 하나로, 구분용 콤마·공백·줄바꿈은 구분자로 인식
+  var m = String(txt).match(/\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?/g) || [];
+  return m.map(function(t) { return Math.round(parseFloat(t.replace(/,/g, '')) * 100) / 100; }).filter(function(n) { return isFinite(n) && n > 0; });
+}
+// 거래일(세션) 경계 = 한국시간 오후 5시. 장 마감(15:30) 후 입력한 종가는 그 날 세션으로 묶이고, 오후 5시가 되면 확정돼요.
+// 세션 날짜 = (한국시간 + 7시간)의 날짜 = UTC+16시간 (기기 시간대와 무관)
+function localDate() {
+  return new Date(Date.now() + 16 * 3600000).toISOString().slice(0, 10);
+}
+var WD = ['일', '월', '화', '수', '목', '금', '토'];
+function sessionLabel(d) {
+  var x = new Date(d + 'T00:00:00Z');
+  while (x.getUTCDay() === 0 || x.getUTCDay() === 6) x = new Date(x.getTime() + 86400000);   // 주말이면 다음 거래일(월)로 표시
+  return md(x.toISOString().slice(0, 10)) + '(' + WD[x.getUTCDay()] + ')';
+}
+function renderSessionBar() {
+  var el = document.getElementById('sessionBar'); if (!el) return;
+  el.innerHTML = '📅 입력 중인 세션 <b style="color:var(--text)">' + sessionLabel(localDate()) + '</b> · 오후 5시(한국시간)에 확정돼요';
+}
+// 날짜가 바뀌면 당일 종가를 전일 종가(종가 목록 맨 앞)로 자동 이동
+function rollover() {
+  var today = localDate(), changed = false;
+  items.forEach(function(it) {
+    if (it.today && it.today.d !== today) {
+      if (it.today.p > 0) trackSigs(it);
+      var arr = parseCloses(it.closes);
+      if (it.today.p > 0) arr.unshift(it.today.p);
+      it.closes = arr.slice(0, 30).join(', ');
+      delete it.today; changed = true;
+    }
+  });
+  if (changed) save();
+  return changed;
+}
+// 확정된 종가 기준 매수 신호 기록 + 이전에 기록한 신호의 이후 손익 추적
+function trackSigs(it) {
+  var tp = it.today.p, td = it.today.d;
+  it.sigs = Array.isArray(it.sigs) ? it.sigs : [];
+  it.sigs.forEach(function(sg) {            // 1) 진행 중인 신호에 확정 종가 추가
+    if (sg.st !== 'open' || !(sg.d < td)) return;
+    sg.path.push(tp);
+    if (sg.s1 === undefined && tp <= sg.e - STOP1 * sg.a) { sg.s1 = tp; sg.k = sg.path.length - 1; }   // 1차: 절반 손절
+    if (tp <= sg.e - STOP2 * sg.a) {                                                                  // 2차: 남은 전량 손절
+      if (sg.s1 === undefined) { sg.s1 = tp; sg.k = sg.path.length - 1; }
+      sg.st = 'stop';
+    } else if (sg.path.length >= HOLD) sg.st = 'done';
+  });
+  var r = analyze(it, { tp: tp });          // 2) 그날 확정 종가로 뜬 매수 신호 기록 (한 종목에는 진행 중인 신호가 없을 때만, 우선순위가 가장 높은 신호 하나만)
+  if (r.ok) {
+    var top = null;
+    r.badges.forEach(function(b) {
+      if (b.k !== 'buy' || !b.c) return;
+      if (!top || (SIG_PRI[b.c] || 0) > (SIG_PRI[top] || 0)) top = b.c;
+    });
+    if (top) {
+      // 종목당 진행 중인 신호가 있으면 새로 기록하지 않음 (항상 1건)
+      var dup = it.sigs.some(function(sg) { return sg.st === 'open'; });
+      if (!dup) it.sigs.unshift({ d: td, c: top, e: tp, a: parseFloat(it.atr), path: [], st: 'open' });
+    }
+  }
+  if (it.sigs.length > 60) it.sigs.length = 60;
+}
+function todayPrice(it) {
+  return (it.today && it.today.d === localDate() && it.today.p > 0) ? it.today.p : null;
+}
+function revStr(txt) { return parseCloses(txt).reverse().join(', '); }
+function fmt(v) { return (v >= 0 ? '+' : '') + v.toFixed(2); }
+function hasDec(it) {   // 종가에 소수점이 하나라도 있으면 소수점 종목(미국장 등)으로 표시
+  var tp = todayPrice(it), arr = (tp ? [tp] : []).concat(parseCloses(it.closes));
+  return arr.some(function(v) { return Math.abs(v - Math.round(v)) > 1e-9; });
+}
+function px(v, dec) {
+  return dec ? v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : Math.round(v).toLocaleString('en-US');
+}
+
+function analyze(it, opt) {
+  var tp = (opt && opt.tp !== undefined) ? opt.tp : todayPrice(it);
+  var c = (tp ? [tp] : []).concat(parseCloses(it.closes)).reverse(), atr = parseFloat(it.atr);   // 입력은 최근→과거(당일 종가가 맨 앞), 계산은 과거→최근
+  var r = { n: c.length, ok: false, msg: '', badges: [], dec: hasDec(it) };
+  r.score = -10;
+  if (!(atr > 0)) { r.msg = 'ATR을 입력해 주세요.'; return r; }
+  if (c.length < 6) { r.msg = '종가가 부족해요. (최소 6개, 현재 ' + c.length + '개)'; return r; }
+  r.ok = true;
+  var N = c.length, cur = c[N - 1], prev = c[N - 2];
+  var past = c.slice(Math.max(0, N - 11), N - 1);         // 직전 최대 10일 종가
+  var hi = Math.max.apply(null, past), lo = Math.min.apply(null, past);
+  var last10 = c.slice(-10);
+  var ma10 = last10.reduce(function(a, v) { return a + v; }, 0) / last10.length;
+  var depth = (hi - cur) / atr;
+  r.maPrev = N >= 11 ? c.slice(N - 11, N - 1).reduce(function(a, v) { return a + v; }, 0) / 10 : null; r.atr = atr; r.cur = cur; r.hi = hi; r.lo = lo; r.ma = ma10; r.depth = depth; r.pastN = past.length;
+  r.low5 = Math.min.apply(null, c.slice(N - 6, N - 1));   // 직전 5일 종가 최저
+  r.del = cur < r.low5;                                     // 오늘 종가가 직전 5일 종가보다 모두 낮으면 삭제 항목
+  r.day = (cur - prev) / atr;
+
+  // 가격 신호 (우선순위: 돌파 > 이탈 > 평균 아래 > 눌림 반등)
+  if (cur > hi) r.badges.push({ t: '▲ 10일 고점 돌파', k: 'buy', d: '매수 후보', p: 70, c: 'bo' });
+  else if (cur < lo) r.badges.push({ t: '▼ 10일 저점 이탈', k: 'sell', d: '매도 경계', p: 0 });
+  else if (cur < ma10 && depth > 1.5) r.badges.push({ t: '▼ 10일 평균 아래 · 고점 대비 -' + depth.toFixed(1) + 'ATR', k: 'sell', d: '비중 축소 검토', p: 10 });
+  else if (depth >= 0.5 && depth <= 2.0 && cur >= prev) r.badges.push({ t: '▲ 눌림 반등 (고점 대비 -' + depth.toFixed(1) + 'ATR)', k: 'buy', d: '매수 후보', p: 100, c: 'rb' });
+
+  // 눌림목 신호 (ATR 합 기준, 종가 11개 필요)
+  if (N >= 11) {
+    var d = [];
+    for (var i = N - 10; i < N; i++) d.push((c[i] - c[i - 1]) / atr);
+    var s10 = d.reduce(function(a, v) { return a + v; }, 0);
+    var d5 = d.slice(-5);
+    var s5 = d5.reduce(function(a, v) { return a + v; }, 0);
+    var a10 = d.reduce(function(a, v) { return a + Math.abs(v); }, 0) / 10;
+    var a5 = d5.reduce(function(a, v) { return a + Math.abs(v); }, 0) / 5;
+    var ratio = a10 > 0 ? a5 / a10 : null;
+    r.d = d; r.s10 = s10; r.s5 = s5; r.a10 = a10; r.a5 = a5; r.ratio = ratio;
+    var cand = s10 >= 1 && s5 > -1 && s5 < 0 && ratio !== null && ratio <= 1.0;
+    if (cand && d[9] >= 0) r.badges.push({ t: '▲ 눌림목 신호', k: 'buy', d: '조용한 조정 후 반등', p: 80, c: 'pb' });
+    else if (cand) r.badges.push({ t: '● 눌림 후보', k: 'wait', d: '반등(당일 0 이상) 대기', p: 50 });
+  }
+  // 매수 우선순위 점수: 가장 높은 신호 기준, 매수 신호가 겹칠수록 가산
+  var best = -1, buys = 0;
+  r.badges.forEach(function(b) { if (b.p > best) best = b.p; if (b.k === 'buy') buys++; });
+  r.score = r.badges.length ? best + Math.max(0, buys - 1) * 5 : 30;   // 신호 없음 30
+  return r;
+}
+
+function barsHtml(d) {
+  var maxAbs = Math.max.apply(null, d.map(function(v) { return Math.abs(v); })) || 1;
+  return '<div class="bars">' + d.map(function(v, idx) {
+    var h = Math.max(2, Math.round(Math.abs(v) / maxAbs * 14));
+    var cls = v >= 0 ? 'pos' : 'neg', bg = v >= 0 ? 'var(--accent)' : 'var(--danger)';
+    return '<div class="col' + (idx === 5 ? ' split' : '') + '">'
+      + '<div class="up"><div class="bar" style="height:' + (v >= 0 ? h : 0) + 'px;background:' + bg + '"></div></div>'
+      + '<div class="dn"><div class="bar" style="height:' + (v < 0 ? h : 0) + 'px;background:' + bg + '"></div></div>'
+      + '<div class="val ' + cls + '">' + fmt(v) + '</div></div>';
+  }).join('') + '</div>';
+}
+
+function render() {
+  renderSessionBar();
+  var el = document.getElementById('list');
+  if (!items.length) { el.innerHTML = '<div class="empty">관심종목을 추가해 주세요.</div>'; setSc('list', ''); renderGroups([]); renderPerf(); return; }
+  var ranked = items.map(function(it, idx) { return { it: it, r: analyze(it), idx: idx }; });
+  ranked.sort(function(a, b) { return (b.r.score - a.r.score) || (a.idx - b.idx); });
+  el.innerHTML = ranked.map(function(o, rank) {
+    var it = o.it, r = o.r, body = '';
+    var maTag = '';   // 오늘 종가가 10일 평균 위/아래인지 (가격 옆 표시)
+    if (r.ok && r.ma > 0) {
+      var maUp = r.cur >= r.ma, maGap = (r.cur - r.ma) / r.ma * 100;
+      maTag = '<span style="font-size:11px;font-weight:700;white-space:nowrap;color:' + (maUp ? 'var(--accent)' : 'var(--danger)') + '">평균 ' + (maUp ? '▲' : '▼') + Math.abs(maGap).toFixed(1) + '%</span> ';
+    }
+    if (!r.ok) {
+      body = '<div class="stat" style="color:var(--warn)">' + esc(r.msg) + '</div>';
+    } else {
+      var head = r.badges.length
+        ? r.badges.map(function(b) { return '<span class="badge ' + b.k + '">' + esc(b.t) + ' <span style="font-weight:400;color:var(--text2)">' + esc(b.d) + '</span></span>'; }).join('')
+        : '<span class="badge none">신호 없음</span>';
+      body = head
+        + '<div class="stat">직전 ' + r.pastN + '일 종가 고 <b>' + px(r.hi, r.dec) + '</b> · 저 <b>' + px(r.lo, r.dec) + '</b> · 10일 평균 <b>' + px(r.ma, r.dec) + '</b></div>'
+        + '<div class="stat">고점 대비 <b>' + (r.depth > 0 ? '-' : '+') + Math.abs(r.depth).toFixed(2) + ' ATR</b> · 당일 <b class="' + (r.day >= 0 ? 'pos' : 'neg') + '">' + fmt(r.day) + '</b></div>';
+      if (r.d) {
+        body += barsHtml(r.d)
+          + '<div class="stat">5일 합 <b class="' + (r.s5 >= 0 ? 'pos' : 'neg') + '">' + fmt(r.s5) + '</b> · 절대평균 <b>' + r.a5.toFixed(2) + '</b></div>'
+          + '<div class="stat">10일 합 <b class="' + (r.s10 >= 0 ? 'pos' : 'neg') + '">' + fmt(r.s10) + '</b> · 절대평균 <b>' + r.a10.toFixed(2) + '</b> · 5일/10일 <b>' + (r.ratio !== null ? r.ratio.toFixed(2) : '-') + '</b></div>';
+      } else {
+        body += '<div class="stat" style="color:var(--text3)">종가 11개가 되면 5일·10일 합과 눌림목 신호가 나와요. (현재 ' + r.n + '개)</div>';
+      }
+    }
+    return '<div class="box" id="card-' + it.id + '">'
+      + '<div class="head"><span class="name" title="신호 성과 추적으로 이동" style="cursor:pointer" onclick="goPerf(' + it.id + ')"><span class="rank">' + (rank + 1) + '</span>' + esc(it.name || '(이름 없음)') + '</span>'
+      + '<span class="price">' + (r.ok ? px(r.cur, r.dec) + '원 ' + maTag : '') + '<button class="xbtn" onclick="delItem(' + it.id + ')">삭제</button></span></div>'
+      + '<div class="trow' + (todayPrice(it) ? ' set' : '') + '"><span>당일 종가</span>'
+      + '<input id="t-' + it.id + '" type="text" inputmode="decimal" placeholder="' + (todayPrice(it) ? '' : '오늘 종가 입력') + '" value="' + (todayPrice(it) ? px(todayPrice(it), hasDec(it)) : '') + '" onkeydown="if(event.key===\'Enter\')setToday(' + it.id + ')">'
+      + '<button onclick="setToday(' + it.id + ')">' + (todayPrice(it) ? '수정' : '입력') + '</button></div>'
+      + body
+      + planHtml(it, r)
+      + '<details><summary>수정</summary>'
+      + '<div class="row"><div><label>종목명</label><input id="n-' + it.id + '" value="' + esc(it.name) + '"></div>'
+      + '<div><label>ATR (가격 단위)</label><input id="a-' + it.id + '" type="number" step="any" inputmode="decimal" value="' + esc(it.atr) + '"></div></div>'
+      + '<label>종가 (전일 → 오래된 날, 당일 종가 제외)</label><textarea id="c-' + it.id + '">' + esc(it.closes) + '</textarea>'
+      + '<div class="actions"><button onclick="applyItem(' + it.id + ')">적용</button></div>'
+      + '</details></div>';
+  }).join('');
+  setSc('list', ranked.length + '종목');
+  renderGroups(ranked);
+  renderPerf();
+}
+
+// 신호별 종목 분류: 종목마다 가장 우선순위 높은 신호 하나로 분류 (우선순위 정렬과 동일 기준)
+var GROUPS = [
+  { k: 'bo',    n: '10일 고점 돌파',   cls: 'buy',  d: '매수 후보' },
+  { k: 'rb',    n: '눌림 반등',        cls: 'buy',  d: '매수 후보' },
+  { k: 'pb',    n: '눌림목 신호',      cls: 'buy',  d: '조용한 조정 후 반등' },
+  { k: 'wait',  n: '눌림 후보',        cls: 'wait', d: '반등 대기' },
+  { k: 'none',  n: '신호 없음',        cls: 'none', d: '' },
+  { k: 'weak',  n: '10일 평균 아래',   cls: 'sell', d: '비중 축소 검토' },
+  { k: 'break', n: '10일 저점 이탈',   cls: 'sell', d: '매도 경계' },
+  { k: 'na',    n: '계산 불가',        cls: 'none', d: '종가 부족 · ATR 확인' },
+  { k: 'del',   n: '삭제 항목',        cls: 'sell', d: '5일 종가 저점 이탈 · 목록 정리 검토' }
+];
+function groupKey(r) {
+  if (!r.ok) return 'na';
+  if (r.del) return 'del';   // 직전 5일 종가보다 모두 낮으면 다른 신호와 상관없이 삭제 항목
+  if (!r.badges.length) return 'none';
+  var top = r.badges.reduce(function(a, b) { return b.p > a.p ? b : a; });
+  return { 100: 'rb', 80: 'pb', 70: 'bo', 50: 'wait', 10: 'weak', 0: 'break' }[top.p] || 'none';
+}
+// 현재가(종가)가 10일 평균 위/아래인지: 평균▲2.7% / 평균▼2.8%
+function maChip(cur, ma, fs, atr) {
+  var up = cur >= ma, gap = (cur - ma) / ma * 100;
+  return '<em style="font-weight:700;white-space:nowrap;font-size:' + fs + 'px;color:' + (up ? 'var(--accent)' : 'var(--danger)') + '">평균' + (up ? '▲' : '▼') + Math.abs(gap).toFixed(1) + '%' + (atr > 0 ? ' (' + (Math.abs(cur - ma) / atr).toFixed(1) + ' ATR)' : '') + '</em>';
+}
+// 10일 평균의 방향(전일 평균 대비) / 진입 이후 흐름 해석 (확정 손익 ± × 평균 위·아래)
+function maDirChip(ma, maPrev, atr, fs) {
+  if (!(maPrev > 0) || !(atr > 0)) return '';
+  var d = (ma - maPrev) / atr, up = d > 0.005, dn = d < -0.005;
+  return '<em style="font-weight:700;white-space:nowrap;font-size:' + fs + 'px;color:' + (up ? 'var(--accent)' : (dn ? 'var(--danger)' : 'var(--text3)')) + '">' + (up ? '↗' : (dn ? '↘' : '→')) + '</em>';
+}
+function perfRead(ret, cur, ma, maPrev, atr) {
+  var plus = ret >= 0, above = cur >= ma, txt;
+  if (plus && above) txt = '정상 진행 · 추세 유지';
+  else if (plus) txt = '수익은 있으나 흐름 약화 · 수익 보호 점검';
+  else if (above) txt = '눌렸지만 평균 지킴 · 손절선 거리 확인';
+  else txt = '신호 실패 쪽 · 손절 규칙 우선';
+  if (maPrev > 0 && atr > 0) {
+    var d = (ma - maPrev) / atr;
+    if (above && d < -0.005) txt += ' (평균 하락 중)';
+    else if (!above && d > 0.005) txt += ' (평균 상승 중)';
+  }
+  return '🧭 확정 <b>' + (plus ? '＋' : '－') + '</b> · 평균 <b>' + (above ? '▲' : '▼') + '</b> → ' + txt;
+}
+// 신호가 처음 뜬 날의 진입가(종가). 추적 중인 같은 종류 신호가 있으면 그 기록, 아직 기록 전이면 오늘 가격
+function entryChip(it, code, cur, dec) {
+  var open = (it.sigs || []).filter(function(s) { return s.c === code && s.st === 'open'; });
+  var sg = open.length ? open.reduce(function(a, b) { return b.d > a.d ? b : a; }) : null;
+  var ep = sg ? sg.e : cur, sym = cur > ep ? '&gt;' : (cur < ep ? '&lt;' : '=');   // 현재가와 진입가 비교
+  return ' <em>' + sym + ' 진입 ' + px(ep, dec) + '(' + (sg ? md(sg.d) : '오늘') + ')</em>';
+}
+function renderGroups(ranked) {
+  var el = document.getElementById('groups'); if (!el) return;
+  if (!ranked.length) { el.innerHTML = '<div class="empty">관심종목이 없어요.</div>'; setSc('groups', ''); return; }
+  var map = {};
+  ranked.forEach(function(o, i) { (map[groupKey(o.r)] = map[groupKey(o.r)] || []).push({ o: o, rank: i + 1 }); });
+  var body = GROUPS.filter(function(g) { return map[g.k]; }).map(function(g) {
+    var list = map[g.k];
+    return '<div class="grp"><div class="gh"><span class="badge ' + g.cls + '">' + g.n + '</span><b style="color:var(--text)">' + list.length + '</b>' + (g.d ? '<span>' + g.d + '</span>' : '') + '</div>'
+      + '<div class="gchips">' + list.map(function(e) {
+        var it = e.o.it, r = e.o.r, extra = (r.ok && g.k !== 'del') ? r.badges.filter(function(b) { return b.k === 'buy'; }).length - (g.cls === 'buy' ? 1 : 0) : 0;
+        return '<span class="gchip"><i>' + e.rank + '</i><span class="gname" onclick="goCard(' + it.id + ')">' + esc(it.name || '(이름 없음)') + '</span>'
+          + (r.ok ? ' <em>' + px(r.cur, r.dec) + '</em>' : '') + ((g.k === 'del' && r.low5) ? ' <em>5일 최저 ' + px(r.low5, r.dec) + '</em>' : '') + ((r.ok && g.cls === 'buy') ? entryChip(it, g.k, r.cur, r.dec) : '') + (extra > 0 ? ' <em>+' + extra + '</em>' : '') + ((it.sigs && it.sigs.length) ? '<b class="garr" title="신호 성과 추적으로 이동" onclick="event.stopPropagation();goPerf(' + it.id + ')">↗</b>' : '') + '</span>';
+      }).join('') + '</div></div>';
+  }).join('');
+  setSc('groups', ranked.length + '종목');
+  el.innerHTML = body + '<div class="stat" style="color:var(--text3)">이름을 누르면 아래 카드로 이동해요. 평균▲▼는 10일 평균 대비, 진입은 신호가 처음 뜬 날의 종가예요(기록 전이면 오늘). 삭제 항목은 오늘 종가가 직전 5일 종가보다 모두 낮은 종목이에요.</div>';
+}
+var UIKEY = 'watch_ui_v1', ui = {};
+function setSc(k, txt) { var e = document.getElementById('sc-' + k); if (e) e.textContent = txt; }
+function setUi(d) {
+  ui[d.getAttribute('data-k')] = d.open;
+  try { localStorage.setItem(UIKEY, JSON.stringify(ui)); } catch (e) {}
+}
+function loadUi() {
+  try { ui = JSON.parse(localStorage.getItem(UIKEY) || '{}') || {}; } catch (e) { ui = {}; }
+  var def = { add: false, perf: true, groups: true, list: true, buyhow: false, rules: false };
+  if (!ui.v2) { ui.perf = true; ui.v2 = true; try { localStorage.setItem(UIKEY, JSON.stringify(ui)); } catch (e) {} }   // 성과 추적을 기본으로 펼침 (한 번만)
+  if (!items.length && !('add' in ui)) ui.add = true;      // 종목이 없으면 추가 등록을 펼쳐 둠
+  Array.prototype.forEach.call(document.querySelectorAll('details.sec'), function(d) {
+    var k = d.getAttribute('data-k');
+    d.open = (k in ui) ? !!ui[k] : !!def[k];
+  });
+}
+// 매수 계획: 1차 = 현재가, 2차 = 눌림은 1차 −1.0ATR(눌림 가격), 돌파는 직전 10일 고점(되돌림 지지)
+// 손절 기준 = 1·2차 평균단가: 1차 손절 −1.5ATR에서 50% 매도, 2차 손절 −2.5ATR에서 전량 매도
+function planHtml(it, r) {
+  if (!r.ok) return '';
+  var atr = parseFloat(it.atr), dec = r.dec;
+  var top = r.badges.length ? r.badges.reduce(function(a, b) { return b.p > a.p ? b : a; }) : null;
+  var open = ui['plan-' + it.id] ? ' open' : '';
+  var wrap = function(tag, inner) {
+    return '<details class="plan" data-k="plan-' + it.id + '" ontoggle="setUi(this)"' + open + '><summary><b>매수 계획</b><span>' + tag + '</span></summary><div class="stat" style="color:var(--text3)">실제로 매수할 때만 보는 참고용이에요. 신호 성과 추적(신호일 종가 한 번에 진입)과는 별개예요.</div>' + inner + '</details>';
+  };
+  if (top && top.k === 'sell') return wrap('매도 경계', '<div class="stat" style="color:var(--text3)">매도 경계 신호라 신규 매수 계획은 표시하지 않아요.</div>');
+  var kind = (top && top.c === 'bo') ? 'bo' : 'pull', ref = !(top && top.k === 'buy');
+  var rp = function(v) { return dec ? Math.round(v * 100) / 100 : Math.round(v); };
+  var p1 = rp(r.cur), p2 = rp(kind === 'bo' ? Math.min(r.hi, r.cur) : r.cur - 1.0 * atr);
+  var avg = (p1 + p2) / 2;
+  var tag = (kind === 'bo' ? '돌파' : '눌림') + ' · 2분할' + (ref ? ' · 참고용' : '');
+  var h = '<div class="stat">1차 50% <b>' + px(p1, dec) + '</b>원 <span style="color:var(--text3)">현재가</span></div>'
+    + '<div class="stat">2차 50% <b>' + px(p2, dec) + '</b>원 <span style="color:var(--text3)">' + (kind === 'bo' ? '직전 10일 고점까지 되돌려 지지될 때' : '1차보다 −1.0ATR 눌릴 때') + '</span></div>'
+    + '<div class="stat">평균단가 <b>' + px(avg, dec) + '</b>원 <span style="color:var(--text3)">(1차만 체결이면 1차가 기준)</span></div>'
+    + '<div class="stat">손절 1차 · 50% 매도 <b class="neg">' + px(avg - STOP1 * atr, dec) + '</b>원 (-' + STOP1.toFixed(1) + 'ATR)</div>'
+    + '<div class="stat">손절 2차 · 전량 매도 <b class="neg">' + px(avg - STOP2 * atr, dec) + '</b>원 (-' + STOP2.toFixed(1) + 'ATR)</div>'
+    + (ref ? '<div class="stat" style="color:var(--text3)">매수 신호가 없어 현재가 기준 참고용이에요. 호가 단위·체결 오차는 반영하지 않아요.</div>' : '<div class="stat" style="color:var(--text3)">호가 단위·체결 오차는 반영하지 않아요.</div>');
+  return wrap(tag, h);
+}
+// 신호별 종목 분류 칩의 ↗ : 신호 성과 추적의 해당 종목 행으로 이동
+function goPerf(id) {
+  var sec = document.querySelector('details.sec[data-k="perf"]');
+  if (sec && !sec.open) { sec.open = true; setUi(sec); }
+  var e = document.getElementById('perf-' + id);
+  if (!e) { alert('이 종목의 신호 기록이 신호 성과 추적 목록(최근 40건)에 없어요.'); return; }
+  setTimeout(function() {
+    if (e.scrollIntoView) e.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    e.style.transition = 'box-shadow .3s';
+    e.style.boxShadow = '0 0 0 2px var(--accent)';
+    setTimeout(function() { e.style.boxShadow = ''; }, 1400);
+  }, 50);
+}
+function goCard(id) {
+  var sec = document.querySelector('details.sec[data-k="list"]');
+  if (sec && !sec.open) { sec.open = true; setUi(sec); }      // 관심종목창이 접혀 있으면 먼저 펼침
+  var e = document.getElementById('card-' + id);
+  if (!e) return;
+  setTimeout(function() {
+    if (e.scrollIntoView) e.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    e.style.transition = 'box-shadow .3s';
+    e.style.boxShadow = '0 0 0 2px var(--accent)';
+    setTimeout(function() { e.style.boxShadow = ''; }, 1400);
+  }, 50);
+}
+function pct(v) { return (v >= 0 ? '+' : '') + v.toFixed(1) + '%'; }
+function md(d) { return String(d).slice(5).replace('-', '/'); }
+function sigCalc(sg) {
+  var p = sg.path, n = p.length, last = n ? p[n - 1] : sg.e, h1 = sg.s1 !== undefined;
+  var hi = Math.max.apply(null, p.concat([sg.e])), lo = Math.min.apply(null, p.concat([sg.e]));
+  // 절반 손절(s1)이 있으면 절반은 손절가, 절반은 이후 종가로 계산
+  var val = function(v, i) { return (h1 && i >= sg.k) ? 0.5 * (sg.s1 - sg.e) + 0.5 * (v - sg.e) : (v - sg.e); };
+  var fin = n ? val(last, n - 1) : 0;
+  return { n: n, ret: fin / sg.e * 100, atrR: fin / sg.a,
+    up: (hi / sg.e - 1) * 100, dn: (lo / sg.e - 1) * 100,
+    cum: p.map(function(v, i) { return val(v, i) / sg.a; }) };
+}
+
+// ── 종목(신호)별 경로 선그래프: 신호 후 확정 종가 흐름 + 진입가·손절선 + 오늘 입력가(잠정) ──
+function rowChart(sg, lp, dec) {
+  var e = sg.e, a = sg.a, p = sg.path, HN = HOLD;
+  var stops = [[STOP1, '1차'], [STOP2, '2차']];
+  var vals = [e].concat(p);
+  stops.forEach(function(s) { vals.push(e - s[0] * a); });
+  var open = sg.st === 'open', useLp = open && lp > 0;
+  if (useLp) vals.push(lp);
+  var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals), pad = (hi - lo) * 0.08 || 1;
+  lo -= pad; hi += pad;
+  var W = 340, H = 124, pl = 6, pr = 8, pt = 8, pb = 18;
+  var X = function(d) { return pl + d / HN * (W - pl - pr); };
+  var Y = function(v) { return pt + (hi - v) / (hi - lo) * (H - pt - pb); };
+  var P = function(v) { return px(v, dec); };
+  var last = p.length ? p[p.length - 1] : e;
+  var col = last >= e ? 'var(--accent)' : 'var(--danger)';
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;height:auto;display:block;margin:6px 0 2px">';
+  svg += '<line x1="' + pl + '" x2="' + (W - pr) + '" y1="' + Y(e) + '" y2="' + Y(e) + '" style="stroke:var(--text3);stroke-width:1;stroke-dasharray:3 3"/>';
+  svg += '<text x="' + (pl + 2) + '" y="' + (Y(e) + 11) + '" style="fill:var(--text3);font-size:9px">진입 ' + P(e) + '</text>';
+  stops.forEach(function(s) {
+    var v = e - s[0] * a;
+    svg += '<line x1="' + pl + '" x2="' + (W - pr) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" style="stroke:var(--danger);stroke-width:1;stroke-dasharray:4 3;opacity:.7"/>';
+    svg += '<text x="' + (pl + 2) + '" y="' + (Y(v) - 3) + '" style="fill:var(--danger);font-size:9px">' + s[1] + ' ' + P(v) + '</text>';
+  });
+  [0, Math.round(HN / 2), HN].forEach(function(d) {
+    svg += '<text x="' + X(d) + '" y="' + (H - 4) + '" text-anchor="' + (d === 0 ? 'start' : (d === HN ? 'end' : 'middle')) + '" style="fill:var(--text3);font-size:9px">' + (d === 0 ? '신호일' : d + '일') + '</text>';
+  });
+  var pts = [X(0).toFixed(1) + ',' + Y(e).toFixed(1)].concat(p.map(function(v, i) { return X(i + 1).toFixed(1) + ',' + Y(v).toFixed(1); }));
+  if (pts.length > 1) svg += '<polyline points="' + pts.join(' ') + '" style="fill:none;stroke:' + col + ';stroke-width:2;stroke-linejoin:round"/>';
+  p.forEach(function(v, i) { svg += '<circle cx="' + X(i + 1).toFixed(1) + '" cy="' + Y(v).toFixed(1) + '" r="2.4" style="fill:' + col + '"/>'; });
+  svg += '<circle cx="' + X(0).toFixed(1) + '" cy="' + Y(e).toFixed(1) + '" r="3" style="fill:var(--text)"/>';
+  if (sg.s1 !== undefined && sg.k !== undefined) svg += '<circle cx="' + X(sg.k + 1).toFixed(1) + '" cy="' + Y(sg.s1).toFixed(1) + '" r="5" style="fill:none;stroke:var(--danger);stroke-width:1.6"/>';
+  if (useLp) {
+    var n = p.length, x0 = X(n), y0 = Y(last), x1 = X(n + 1), y1 = Y(lp), c2 = lp >= e ? 'var(--accent)' : 'var(--danger)';
+    svg += '<line x1="' + x0.toFixed(1) + '" y1="' + y0.toFixed(1) + '" x2="' + x1.toFixed(1) + '" y2="' + y1.toFixed(1) + '" style="stroke:' + c2 + ';stroke-width:1.5;stroke-dasharray:3 3"/>';
+    svg += '<circle cx="' + x1.toFixed(1) + '" cy="' + y1.toFixed(1) + '" r="3.4" style="fill:rgba(0,0,0,.65);stroke:' + c2 + ';stroke-width:1.5"/>';
+    svg += '<text x="' + Math.min(x1, W - pr - 2).toFixed(1) + '" y="' + (y1 - 6).toFixed(1) + '" text-anchor="end" style="fill:' + c2 + ';font-size:9px">오늘(잠정) ' + P(lp) + '</text>';
+  }
+  return svg + '</svg>';
+}
+function renderPerf() {
+  var el = document.getElementById('perf'); if (!el) return;
+  var all = [];
+  items.forEach(function(it) { (it.sigs || []).forEach(function(sg) { all.push({ it: it, s: sg }); }); });
+  if (!all.length) {
+    setSc('perf', '0건');
+    el.innerHTML = '<div class="stat" style="color:var(--text3);margin-top:0">아직 기록된 신호가 없어요. 당일 종가를 입력하면 한국시간 오후 5시 이후 확정 종가 기준으로 그날 뜬 매수 신호가 자동 기록되고, 이후 손익을 최대 10일간 추적해요.</div>';
+    return;
+  }
+  all.sort(function(a, b) { return a.s.d < b.s.d ? 1 : (a.s.d > b.s.d ? -1 : 0); });
+  var summary = Object.keys(SIGNAME).map(function(c) {
+    var list = all.filter(function(o) { return o.s.c === c; });
+    if (!list.length) return '';
+    var closed = list.filter(function(o) { return o.s.st !== 'open'; });
+    var line = '<b>' + SIGNAME[c] + '</b> ' + list.length + '건 (진행 ' + (list.length - closed.length) + ' · 종료 ' + closed.length + ')';
+    if (closed.length) {
+      var wins = 0, sr = 0, sa = 0;
+      closed.forEach(function(o) { var k = sigCalc(o.s); if (k.ret > 0) wins++; sr += k.ret; sa += k.atrR; });
+      line += (closed.length < MINN ? ' · <span style="color:var(--text3)">표본 부족</span>' : '') + ' · 승률 <b>' + Math.round(wins / closed.length * 100) + '%</b> · 평균 <b class="' + (sr >= 0 ? 'pos' : 'neg') + '">' + pct(sr / closed.length) + '</b> (' + fmt(sa / closed.length) + ' ATR)';
+    }
+    return '<div class="stat">' + line + '</div>';
+  }).join('');
+  var shown = all.slice(0, 40).sort(function(a, b) {   // 상승률(확정 종가 기준 손익) 높은 순
+    var d = sigCalc(b.s).ret - sigCalc(a.s).ret;
+    return d || (a.s.d < b.s.d ? 1 : -1);
+  });
+  var latestRow = {};   // 종목마다 가장 최근 신호 행에만 이동용 id 부여
+  shown.forEach(function(o) { var c = latestRow[o.it.id]; if (!c || o.s.d > c.s.d) latestRow[o.it.id] = o; });
+  var rows = shown.map(function(o) {
+    var sg = o.s, k = sigCalc(sg), open = sg.st === 'open', lp = todayPrice(o.it), dec = hasDec(o.it) || Math.abs(sg.e - Math.round(sg.e)) > 1e-9;
+    var half = sg.s1 !== undefined, an = analyze(o.it);
+    var chip = open ? ['wait', '진행 ' + k.n + '/' + HOLD + '일' + (half ? ' · 절반 손절' : '')] : (sg.st === 'stop' ? ['sell', '전량 손절'] : ['none', HOLD + '일 종료' + (half ? ' · 절반 손절' : '')]);
+    var h = '<div class="sig"' + (latestRow[o.it.id] === o ? ' id="perf-' + o.it.id + '"' : '') + '><div class="top"><span><b style="cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px" onclick="goCard(' + o.it.id + ')">' + esc(o.it.name || '(이름 없음)') + '</b> · ' + SIGNAME[sg.c] + '</span><span class="chip ' + chip[0] + '">' + chip[1] + '</span></div>'
+      + '<div class="stat">' + md(sg.d) + ' 신호 · 진입 <b>' + px(sg.e, dec) + '</b>원' + ((an.ok && an.ma > 0) ? ' · ' + maChip(an.cur, an.ma, 11, an.atr) + (an.maPrev > 0 ? ' ' + maDirChip(an.ma, an.maPrev, an.atr, 11) : '') : '') + '</div>';
+    if (k.n) h += rowChart(sg, lp, dec);
+    else h += '<div class="stat" style="color:var(--text3)">확정 종가 대기 중 · 다음 세션 확정(오후 5시) 이후부터 추적해요.</div>';
+    if (k.n) h += '<div class="stat">' + (open ? '확정 기준' : '최종 결과') + ' <b class="' + (k.ret >= 0 ? 'pos' : 'neg') + '">' + pct(k.ret) + ' (' + fmt(k.atrR) + ' ATR)</b> · 최대 상승 <b class="pos">' + pct(k.up) + '</b> · 최대 하락 <b class="neg">' + pct(k.dn) + '</b>' + (half ? ' · 절반 손절가 <b>' + px(sg.s1, dec) + '</b>원' : '') + '</div>';
+    if (open && lp) { var lr = ((half ? 0.5 * (sg.s1 - sg.e) + 0.5 * (lp - sg.e) : lp - sg.e) / sg.e) * 100, warn = lp <= sg.e - STOP2 * sg.a ? '⚠ 2차 손절선 ' + px(sg.e - STOP2 * sg.a, dec) + '원 잠정 이탈' : (lp <= sg.e - STOP1 * sg.a ? '⚠ 1차 손절선 ' + px(sg.e - STOP1 * sg.a, dec) + '원 잠정 이탈' : ''); h += '<div class="stat">오늘 ' + px(lp, dec) + '원 기준 <b class="' + (lr >= 0 ? 'pos' : 'neg') + '">' + pct(lr) + ' (' + fmt(lr / 100 * sg.e / sg.a) + ' ATR)</b> <span style=\"color:var(--text3)\">(잠정)</span>' + (warn ? ' · <span style="color:var(--danger)">' + warn + '</span>' : '') + '</div>'; }
+    if (open && k.n && an.ok && an.ma > 0) h += '<div class="stat">' + perfRead(k.ret, an.cur, an.ma, an.maPrev, an.atr) + '</div>';
+    return h + '</div>';
+  }).join('');
+  setSc('perf', all.length + '건');
+  el.innerHTML = summary
+    + '<div class="stat" style="color:var(--text3)">백테스트 기준: 신호가 뜬 날의 확정 종가에 한 번에 진입했다고 가정해요(분할 매수·평균단가 아님). 손익은 종가 기준이고, 종료 ' + MINN + '건 미만이면 표본 부족으로 봐요. 종가가 −' + STOP1 + 'ATR 이하이면 그 종가에 절반을 손절하고, −' + STOP2 + 'ATR 이하이면 남은 전량을 손절하며 종료해요. 손절이 없으면 ' + HOLD + '일째 종가로 종료하고, 절반 손절 뒤 손익은 절반은 손절가·절반은 이후 종가로 계산해요.</div>'
+    + '<div class="stat" style="color:var(--text3);margin-top:8px">읽는 법: 확정 ＋/－ = 진입가 대비 손익, 평균 ▲/▼ = 10일 평균 대비 위치, ↗↘ = 평균 방향(전일 대비). ＋▲ 정상 진행 · ＋▼ 수익 보호 점검 · －▲ 눌렸지만 평균 지킴 · －▼ 손절 규칙 우선</div>'
+    + '<div class="stat" style="color:var(--text3);margin-top:8px">상승률(확정 종가 기준 손익) 높은 순 · 최근 40건</div>'
+    + rows
+    + '<div class="actions"><button onclick="clearSigs()" style="color:var(--danger)">신호 기록 초기화</button></div>';
+}
+function clearSigs() {
+  if (!confirm('모든 종목의 신호 기록을 지울까요?')) return;
+  items.forEach(function(it) { delete it.sigs; });
+  save(); render();
+}
+
+function addItem() {
+  var name = document.getElementById('fName').value.trim();
+  var atr = document.getElementById('fAtr').value;
+  var closes = document.getElementById('fCloses').value;
+  if (!name) { alert('종목명을 입력해 주세요.'); return; }
+  if (!(parseFloat(atr) > 0)) { alert('ATR을 입력해 주세요.'); return; }
+  if (parseCloses(closes).length < 6) { alert('종가를 6개 이상 입력해 주세요.'); return; }
+  items.unshift({ id: Date.now(), name: name, atr: atr, closes: closes, ord: 'd' });
+  save(); render();
+  document.getElementById('fName').value = '';
+  document.getElementById('fAtr').value = '';
+  document.getElementById('fCloses').value = '';
+}
+function findItem(id) {
+  for (var i = 0; i < items.length; i++) if (items[i].id === id) return items[i];
+  return null;
+}
+function applyItem(id) {
+  var it = findItem(id); if (!it) return;
+  it.name = document.getElementById('n-' + id).value.trim();
+  it.atr = document.getElementById('a-' + id).value;
+  it.closes = document.getElementById('c-' + id).value;
+  save(); render();
+}
+function setToday(id) {
+  var it = findItem(id); if (!it) return;
+  var v = document.getElementById('t-' + id).value.trim();
+  if (!v) { delete it.today; }
+  else {
+    var p = parseCloses(v)[0];
+    if (!(p > 0)) { alert('당일 종가를 숫자로 입력해 주세요.'); return; }
+    it.today = { p: p, d: localDate() };
+  }
+  save(); render();
+}
+function delItem(id) {
+  if (!confirm('삭제할까요? 신호 기록도 함께 삭제돼요.')) return;
+  items = items.filter(function(x) { return x.id !== id; });
+  save(); render();
+}
+
+function clearAll() {
+  if (!items.length) { alert('삭제할 종목이 없어요.'); return; }
+  if (!confirm('관심종목 ' + items.length + '개를 모두 삭제할까요?\n삭제 전에 내보내기로 백업해 두는 걸 권장해요.')) return;
+  items = [];
+  save(); render();
+}
+
+// 공통 모달
+function openModal(title, hint, value, readOnly, buttons, extraNode) {
+  var ov = document.createElement('div'); ov.className = 'overlay';
+  var box = document.createElement('div'); box.className = 'modal';
+  var t = document.createElement('div'); t.className = 'mt'; t.textContent = title;
+  var h = document.createElement('div'); h.className = 'mh'; h.textContent = hint;
+  var ta = document.createElement('textarea'); ta.value = value; ta.readOnly = readOnly;
+  if (!readOnly) ta.placeholder = '여기에 내보내기 데이터를 붙여넣기';
+  var mb = document.createElement('div'); mb.className = 'mb';
+  function close() { document.body.removeChild(ov); }
+  buttons.forEach(function(b) {
+    var btn = document.createElement('button'); btn.textContent = b.label;
+    if (b.main) { btn.style.background = 'var(--accent)'; btn.style.color = '#000'; btn.style.border = 'none'; btn.style.fontWeight = '700'; }
+    btn.onclick = function() { b.fn(ta, btn, close); };
+    mb.appendChild(btn);
+  });
+  box.appendChild(t); box.appendChild(h);
+  if (extraNode) box.appendChild(extraNode);
+  box.appendChild(ta); box.appendChild(mb);
+  ov.appendChild(box); ov.onclick = function(e) { if (e.target === ov) close(); };
+  document.body.appendChild(ov);
+  return ta;
+}
+
+function exportData() {
+  var data = JSON.stringify({ app: 'watch_signal_v1', items: items }, null, 2);
+  var ta = openModal('⬇ 내보내기 · ' + items.length + '개 종목',
+    '아래 텍스트를 전체 복사해서 메모앱에 저장해 두세요.\n가져오기에서 붙여넣으면 복원돼요.', data, true, [
+      { label: '📋 전체 복사', main: true, fn: function(ta, btn) {
+          ta.select(); ta.setSelectionRange(0, data.length);
+          try { document.execCommand('copy'); } catch (e) { if (navigator.clipboard) navigator.clipboard.writeText(data); }
+          btn.textContent = '✓ 복사됨';
+          setTimeout(function() { btn.textContent = '📋 전체 복사'; }, 2000);
+      } },
+      { label: '닫기', fn: function(ta, btn, close) { close(); } }
+    ]);
+}
+
+function showImport() {
+  var pick = document.createElement('input'); pick.type = 'file'; pick.accept = '.json,.txt,application/json,text/plain';
+  pick.style.cssText = 'font-size:12px;color:#d0d9de;padding:4px';
+  var ta = openModal('⬆ 가져오기',
+    '방법 1: 내보내기에서 복사한 데이터를 붙여넣기\n방법 2: JSON 파일 직접 선택\n\n· 가져오기: 같은 종목은 붙여넣은 내용으로 갱신하고, 새 종목은 추가해요. 붙여넣은 데이터에 없는 기존 종목은 그대로 둬요.\n· 전체 교체: 지금 종목을 모두 지우고 붙여넣은 내용 그대로 복원해요.', '', false, [
+      { label: '가져오기', main: true, fn: function(ta, btn, close) { doImport(ta.value, close, false); } },
+      { label: '전체 교체', fn: function(ta, btn, close) { doImport(ta.value, close, true); } },
+      { label: '취소', fn: function(ta, btn, close) { close(); } }
+    ], pick);
+  pick.onchange = function() {
+    var f = pick.files && pick.files[0]; if (!f) return;
+    var rd = new FileReader(); rd.onload = function() { ta.value = String(rd.result || ''); }; rd.readAsText(f);
+  };
+}
+
+function doImport(text, close, replaceAll) {
+  var obj;
+  try { obj = JSON.parse(text); } catch (e) { alert('데이터 형식이 올바르지 않아요.'); return; }
+  var arr = Array.isArray(obj) ? obj : (obj && Array.isArray(obj.items) ? obj.items : null);
+  if (!arr) { alert('종목 데이터를 찾을 수 없어요.'); return; }
+  var valid = arr.filter(function(x) { return x && typeof x.name === 'string' && x.closes !== undefined; });
+  if (!valid.length) { alert('가져올 종목이 없어요.'); return; }
+  if (replaceAll) {
+    if (items.length && !confirm('현재 종목 ' + items.length + '개를 모두 지우고 ' + valid.length + '개로 교체할까요?')) return;
+    items = [];
+  }
+  var added = 0, updated = 0, same = 0, bad = arr.length - valid.length, seq = 0;
+  valid.forEach(function(x) {
+    var rec = { id: (typeof x.id === 'number' ? x.id : Date.now() + (seq++)), name: x.name, atr: x.atr, closes: (x.ord === 'd' ? String(x.closes) : revStr(x.closes)), ord: 'd' };
+    if (x.today && x.today.p > 0 && typeof x.today.d === 'string') rec.today = { p: +x.today.p, d: x.today.d };
+    if (Array.isArray(x.sigs)) rec.sigs = x.sigs.filter(function(g) { return g && SIGNAME[g.c] && g.e > 0 && g.a > 0 && Array.isArray(g.path) && typeof g.d === 'string'; });
+    var hit = null;
+    for (var k = 0; k < items.length; k++) { if (items[k].id === rec.id) { hit = items[k]; break; } }
+    if (hit) {
+      if (hit.name === rec.name && String(hit.atr) === String(rec.atr) && String(hit.closes) === rec.closes && JSON.stringify(hit.today || null) === JSON.stringify(rec.today || null) && (!rec.sigs || JSON.stringify(hit.sigs || []) === JSON.stringify(rec.sigs))) { same++; }
+      else { hit.name = rec.name; hit.atr = rec.atr; hit.closes = rec.closes; if (rec.today) hit.today = rec.today; else delete hit.today; if (rec.sigs) hit.sigs = rec.sigs; updated++; }
+    } else {
+      var dup = items.some(function(y) { return y.name === rec.name && String(y.atr) === String(rec.atr) && String(y.closes) === rec.closes && JSON.stringify(y.today || null) === JSON.stringify(rec.today || null); });
+      if (dup) { same++; } else { items.push(rec); added++; }
+    }
+  });
+  rollover(); save(); render(); close();
+  var msg = '가져오기 완료 · ' + added + '개 추가 · ' + updated + '개 갱신';
+  if (same) msg += ' · ' + same + '개 동일';
+  if (bad) msg += ' · ' + bad + '개 형식 오류';
+  alert(msg);
+}
+
+load(); loadUi(); render();
+// 한국시간 오후 5시가 지나면 당일 종가 → 전일 종가로 자동 이동 (앱을 켜 둔 채로 넘어가도, 다시 열어도 반영)
+function checkDay() { if (rollover()) render(); }
+setInterval(checkDay, 30000);
+document.addEventListener('visibilitychange', function() { if (!document.hidden) checkDay(); });
+window.addEventListener('focus', checkDay);
+</script>
+</body>
+</html>
